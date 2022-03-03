@@ -8,7 +8,7 @@ import './models/index.mjs';
 import './services/passport.mjs';
 import routes from './routes/index.mjs';
 
-mongoose.connect(keys.mongodb_uri, console.log('Connected to MongoDB'));
+mongoose.connect(keys.mongodb.uri, console.log('Connected to MongoDB'));
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
+    keys: [keys.cookie.key]
   })
 );
 app.use(passport.initialize());

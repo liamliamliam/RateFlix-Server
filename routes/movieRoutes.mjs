@@ -1,49 +1,44 @@
 import mongoose from 'mongoose';
 import axios from 'axios';
 import keys from '../config/keys.mjs';
+import tmdbConfig from '../config/tmdbConfig.mjs';
 import requireLogin from '../middlewares/requireLogin.mjs';
 
 const Rating = mongoose.model('Ratings');
+const base_url = 'http://image.tmdb.org/t/p/';
+
+const getCrew = job => {
+
+}
 
 export default (app, ROUTE_PREFIX) => {
-  app.get(
-    `${ROUTE_PREFIX}/movie/search/:searchString`,
-    requireLogin,
-    async (req, res) => {
-      const searchResults = { status: false, movies: [], msg: '' };
-      try {
-        const omdbResponse = await axios.get(
-          `http://www.omdbapi.com/?apikey=${keys.omdbKey}&type=movie&s=${req.params.searchString}`
-        );
-        //console.log('search res:', omdbResponse.data);
-        const { Response, Search, Error } = omdbResponse.data;
-        searchResults.status = Response === 'True';
-        if (searchResults.status) {
-          if (!!Search && !!Search.length) {
-            searchResults.movies = await Promise.all(Search.map(async (movie, i) => {
-              return {
-                ...movie, 
-                rating: await Rating.findOne({ imdbId: movie.imdbID, userId: req.user._id })
-              };
-            }));
-            return res.send(searchResults);
-          }
-        } else {
-          searchResults.msg = Error;
-        }
-      } catch (err) {
-        searchResults.msg = err;
-        return res.send(searchResults);
+
+  app.get(`${ROUTE_PREFIX}/movie/:id`, async (req, res) => {
+    const url = `${keys.tmdb.v3.url}/movie/${req.params.id}?append_to_response=credits,videos&api_key=${keys.tmdb.v3.key}`;
+    const { data } = await axios.get(url);
+    data.rating = await Rating.findOne({ movie_id: data.id, user_id: req.user._id });
+    data.imagePaths = {
+      backdrop: {
+        original: `${base_url}original${data.backdrop_path}`
+      },
+      poster: {
+        tiny: `${base_url}w92${data.poster_path}`,
+        normal: `${base_url}w342${data.poster_path}`,
+        original: `${base_url}original${data.poster_path}`
       }
-    }
-  );
-  app.get(`${ROUTE_PREFIX}/movie/:imdbid`, async (req, res) => {
-    const omdbResponse = await axios.get(
-      `http://www.omdbapi.com/?apikey=${keys.omdbKey}&i=${req.params.imdbid}`
-    );
-    res.send(omdbResponse.data);
+    };
+    const jobs = [
+      { prop: 'director', name: 'Director' },
+      { prop: 'writer', name: 'Story' },
+      { prop: 'screenplay', name: 'Screenplay' }
+    ]
+    jobs.map(job => {
+      const job_list = data.credits.crew.filter(person => person.job === job.name);
+      data[job.prop] = job_list.length ? job_list.map(j => j.name).join(', ') : '';
+    });
+    res.send(data);
   });
-  app.post(`${ROUTE_PREFIX}/movie`, (req, res) => {});
+  
 };
 
 // Pulp Fiction (tt0110912)
