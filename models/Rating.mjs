@@ -8,6 +8,7 @@ const ratingSchema = new Schema({
     backdrop: String,
     poster: String,
     release_date: Date,
+    year: Number,
     title: {type: String, required: true },
     vote_average: Number,
     vote_count: Number

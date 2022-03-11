@@ -13,8 +13,21 @@ export default (app, ROUTE_PREFIX) => {
   });
 
   app.get(`${ROUTE_PREFIX}/myratings/`, async (req, res) => {
-    console.log('[get]api/myratings');
-    const ratings = await Rating.find({ user_id: req.user._id });
+    console.log('[get]api/myratings - req.query:', req.query);
+    // const score_range = req.query.sr.split(',');
+    // const year_range = req.query.yr.split(',');
+    // const date_created_range = req.query.dcr.split(',').map(d => new Date(d));
+    // const date_modified_range = req.query.dmr.split(',').map(d => new Date(d));
+    // console.log(date_created_range, date_modified_range);
+    const ratings = await Rating.find(
+      {
+        user_id: req.user._id,
+        // score: { $gte: score_range[0], $lte: score_range[1] },
+        // dateCreated: { $gte: date_created_range[0], $lte: date_created_range[1] },
+        // dateModified: { $gte: date_modified_range[0], $lte: date_modified_range[1] },
+        // 'movie.year': { $gte : year_range[0], $lte: year_range[1] }
+      }
+    ).sort({ score: 'desc' });
     if (ratings) return res.send(ratings);
     return res.send(null);
   });
