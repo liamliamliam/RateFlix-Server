@@ -13,13 +13,13 @@ export default {
     }
   },
   mongodb: {
-    uri: process.env.MONGODB_URL
+    uri: process.env.MONGODB_URI
   },
   google: {
-    clientId: '960338082086-4250g85r14ij59uj96s2fhlbv1glbac0.apps.googleusercontent.com',
-    clientSecret: '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'
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET
   },
   cookie: {
-    key: '!variogbna.!!!fobnafr$%^%(%8489%)*3nt983*N#b789*&BN#*&hp9*#B'
+    key: process.env.COOKIE_KEY
   }
 };
