@@ -1,4 +1,4 @@
-//import 'dotenv/config';
+import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
@@ -24,5 +24,5 @@ app.use(passport.session());
 
 routes(app);
 
-const PORT = 5500;
+const PORT = process.env.PORT || 5500;
 app.listen(PORT, console.log(`Running on port ${PORT}`));
