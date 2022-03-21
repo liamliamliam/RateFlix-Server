@@ -1,6 +1,5 @@
 import axios from 'axios';
 import mongoose from 'mongoose';
-import keys from '../config/keys.mjs';
 import requireLogin from '../middlewares/requireLogin.mjs';
 
 const Rating = mongoose.model('Ratings');
@@ -13,7 +12,7 @@ export default (app, ROUTE_PREFIX) => {
     async (req, res) => {
       try {
         const { page, query } = req.query;
-        const url = `${keys.tmdb.v3.url}/search/movie?api_key=${keys.tmdb.v3.key}&query=${query}&page=${page || 1}`;
+        const url = `${process.env.TMDB_API3_URL}/search/movie?api_key=${process.env.TMDB_API3_KEY}&query=${query}&page=${page || 1}`;
         const tmdb = await axios.get(url);
         const search = { ...tmdb.data, query };
         if (!!search.results.length) {

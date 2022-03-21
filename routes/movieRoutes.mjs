@@ -1,20 +1,13 @@
 import mongoose from 'mongoose';
 import axios from 'axios';
-import keys from '../config/keys.mjs';
-import tmdbConfig from '../config/tmdbConfig.mjs';
-import requireLogin from '../middlewares/requireLogin.mjs';
 
 const Rating = mongoose.model('Ratings');
 const base_url = 'http://image.tmdb.org/t/p/';
 
-const getCrew = job => {
-
-}
-
 export default (app, ROUTE_PREFIX) => {
 
   app.get(`${ROUTE_PREFIX}/movie/:id`, async (req, res) => {
-    const url = `${keys.tmdb.v3.url}/movie/${req.params.id}?append_to_response=credits,videos&api_key=${keys.tmdb.v3.key}`;
+    const url = `${process.env.TMDB_API3_URL}/movie/${req.params.id}?append_to_response=credits,videos&api_key=${process.env.TMDB_API3_KEY}`;
     const { data } = await axios.get(url);
     data.rating = await Rating.findOne({ movie_id: data.id, user_id: req.user._id });
     data.imagePaths = {
@@ -40,7 +33,3 @@ export default (app, ROUTE_PREFIX) => {
   });
   
 };
-
-// Pulp Fiction (tt0110912)
-
-// Happy Gilmore (tt0116483)
