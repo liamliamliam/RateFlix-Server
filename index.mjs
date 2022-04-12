@@ -29,6 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 routes(app);
+app.get('/api/env', (req, res) => res.json({ env: process.env.NODE_ENV }));
 
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, console.log(`Running on port ${PORT}`));
