@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import './models/index.mjs';
 import './services/passport.mjs';
 import routes from './routes/index.mjs';
@@ -11,6 +12,11 @@ import routes from './routes/index.mjs';
 mongoose.connect(process.env.MONGODB_URI, console.log('Connected to MongoDB'));
 
 const app = express();
+
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000', 'https://rateflix-server.herokuapp.com']
+}));
 
 app.use(bodyParser.json());
 app.use(

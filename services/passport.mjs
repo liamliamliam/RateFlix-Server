@@ -22,14 +22,11 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
-      proxy: true,
+      callbackURL: "/auth/google/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log('Using GoogleStrategy. profile:', profile._json);
       const existingUser = await User.findOne({ googleId: profile.id });
       if (existingUser) return done(null, existingUser);
-      console.log('Google Profile:', profile);
       const { _json } = profile;
       const user = await new User({ 
         firstName: _json.given_name,

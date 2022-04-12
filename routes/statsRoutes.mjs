@@ -38,7 +38,7 @@ const general_stats = async () => {
 
 export default (app, ROUTE_PREFIX) => {
   app.get(`${ROUTE_PREFIX}/stats`, async (req, res) => {
-    console.log('[get]api/stats');
+    //console.log('[get]api/stats');
 
     const stats = await general_stats();
 
