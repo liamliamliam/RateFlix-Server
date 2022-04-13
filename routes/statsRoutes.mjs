@@ -15,6 +15,7 @@ const last_ratings = async (time, user_id) => {
 
 const general_stats = async () => {
   return {
+    test: 123,
     timestamp: new Date().toISOString(),
     ratings: {
       totals: {
