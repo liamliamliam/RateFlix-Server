@@ -14,14 +14,12 @@ export default app => {
   });
 
   app.get('/auth/session', (req, res) => {
-    console.log('/auth/session - req.user:', req.user);
     res.send(req.user);
   });
 
   app.put('/auth/user', async (req, res) => {
     const { firstName, lastName, email, passwordHash, darkMode } = req.body;
     const user = await User.findOneAndUpdate({ _id: req.user._id }, req.body, { new: true });
-    console.log('/auth/user/ - user:', user);
     res.send(user);
   });
 
