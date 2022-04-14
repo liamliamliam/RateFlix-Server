@@ -14,7 +14,7 @@ mongoose.connect(process.env.MONGODB_URI, console.log('Connected to MongoDB'));
 const app = express();
 
 app.use(cors({
-  credentials: true,
+  credentials: 'include',
   origin: ['http://localhost:3000', 'https://rateflix.vercel.app']
 }));
 
