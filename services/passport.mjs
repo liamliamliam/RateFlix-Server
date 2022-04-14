@@ -10,10 +10,12 @@ const LocalStrategy = passportLocal.Strategy;
 const User = mongoose.model('Users');
 
 passport.serializeUser((user, done) => {
+  console.log('serializeuser() - user:', user);
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
+  console.log('deserializeUser() - id:', id);
   User.findById(id).then((user) => done(null, user));
 });
 
