@@ -15,7 +15,7 @@ const app = express();
 
 app.use(cors({
   credentials: 'include',
-  origin: ['http://localhost:3000', 'https://rateflix.vercel.app']
+  origin: ['https://rateflix.vercel.app', 'http://localhost:3000']
 }));
 
 app.use(bodyParser.json());
