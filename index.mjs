@@ -22,7 +22,10 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_KEY]
+    keys: [process.env.COOKIE_KEY],
+    sameSite: 'none',
+    secure: true,
+    httpOnly: false
   })
 );
 app.use(passport.initialize());
