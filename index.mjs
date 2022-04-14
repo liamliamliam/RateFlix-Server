@@ -15,7 +15,7 @@ const app = express();
 
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:3000', 'https://rateflix.vercel.app', 'http://rateflix.vercel.app']
+  origin: ['http://localhost:3000', 'https://rateflix.vercel.app']
 }));
 
 app.use(bodyParser.json());
@@ -23,9 +23,7 @@ app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY],
-    sameSite: 'none',
-    secure: true,
-    httpOnly: false
+    domain: process.env.NODE_ENV === 'production' ? 'rateflix.vercel.app' : 'localhost:3000'
   })
 );
 app.use(passport.initialize());
