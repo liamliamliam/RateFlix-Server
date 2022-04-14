@@ -13,19 +13,21 @@ mongoose.connect(process.env.MONGODB_URI, console.log('Connected to MongoDB'));
 
 const app = express();
 
-app.use(cors({
-  credentials: 'include',
-  origin: ['https://rateflix.vercel.app', 'http://localhost:3000'],
-  secure: (process.env.NODE_ENV === 'production'),
-  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-  httpOnly: true
-}));
+app.use(
+  cors({
+    credentials: 'include',
+    origin: ['https://rateflix.vercel.app', 'http://localhost:3000']
+  })
+);
 
 app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_KEY]
+    keys: [process.env.COOKIE_KEY],
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    httpOnly: true
   })
 );
 app.use(passport.initialize());
