@@ -40,8 +40,7 @@ export default app => {
     '/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      res.send('Done');
-      //res.redirect(process.env.NODE_ENV === 'production' ? 'https://rateflix.vercel.app/' : 'http://localhost:3000');
+      res.redirect(process.env.NODE_ENV === 'production' ? 'https://rateflix.vercel.app/' : 'http://localhost:3000');
     }
   );
   

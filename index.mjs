@@ -23,7 +23,7 @@ app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY],
-    domain: process.env.NODE_ENV === 'production' ? 'rateflix.vercel.app' : 'localhost:3000'
+    domain: process.env.NODE_ENV === 'production' ? 'rateflix-server.herokuapp.com' : 'localhost:5500'
   })
 );
 app.use(passport.initialize());
