@@ -30,6 +30,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set('trust proxy', 1);
+
 routes(app);
 app.get('/api/env', (req, res) => res.json({ env: process.env.NODE_ENV }));
 
