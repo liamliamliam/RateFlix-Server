@@ -5,7 +5,7 @@ const User = mongoose.model('Users');
 
 export default app => {
 
-  app.post('/signup', async (req, res) => {
+  app.post('/auth/signup', async (req, res) => {
     const { firstName, lastName, email, passwordHash, darkMode } = req.body;
     const existingUser = await User.findOne({ eamil });
     if (existingUser) res.status(400).send('Email already exists');
@@ -14,12 +14,10 @@ export default app => {
   });
 
   app.get('/auth/session', (req, res) => {
-    console.log('/auth/session - req.user', req.user);
     res.send(req.user);
   });
 
   app.put('/auth/user', async (req, res) => {
-    const { firstName, lastName, email, passwordHash, darkMode } = req.body;
     const user = await User.findOneAndUpdate({ _id: req.user._id }, req.body, { new: true });
     res.send(user);
   });
