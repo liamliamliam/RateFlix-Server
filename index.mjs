@@ -24,9 +24,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_KEY],
-    domain: 'rateflix.vercel.app',
-    secure: true
+    keys: [process.env.COOKIE_KEY]
   })
 );
 app.use(passport.initialize());
