@@ -25,7 +25,8 @@ app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY],
-    domain: 'https://rateflix.vercel.app'
+    domain: 'http://rateflix.vercel.app',
+    secure: true
   })
 );
 app.use(passport.initialize());
