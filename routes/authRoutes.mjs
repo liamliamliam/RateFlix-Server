@@ -39,10 +39,6 @@ export default app => {
     passport.authenticate('google'),
     (req, res) => {
       res.redirect(process.env.NODE_ENV === 'production' ? 'https://www.rateflix.lol/' : 'http://localhost:3000');
-      //console.log('####################');
-      //console.log('/auth/google/callback - req.query.code:', req.query.code);
-      //console.log('####################');
-      //res.json({ cookie: `session=${req.query.code}` });
     }
   );
   
