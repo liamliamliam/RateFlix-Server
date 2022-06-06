@@ -38,11 +38,11 @@ export default app => {
     '/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      console.log('####################');
-      console.log('/auth/google/callback - req.cookie:', req.cookie);
-      console.log('####################');
-      //res.redirect(process.env.NODE_ENV === 'production' ? 'https://rateflix.vercel.app/' : 'http://localhost:3000');
-      res.send(req.cookie);
+      res.redirect(process.env.NODE_ENV === 'production' ? 'https://www.rateflix.lol/' : 'http://localhost:3000');
+      //console.log('####################');
+      //console.log('/auth/google/callback - req.query.code:', req.query.code);
+      //console.log('####################');
+      //res.json({ cookie: `session=${req.query.code}` });
     }
   );
   

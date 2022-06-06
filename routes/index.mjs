@@ -5,7 +5,7 @@ import statsRoutes from './statsRoutes.mjs';
 import searchRoutes from './searchRoutes.mjs';
 import testRoutes from './testRoutes.mjs';
 
-const ROUTE_PREFIX = '/api';
+const ROUTE_PREFIX = '';
 
 export default app => {
   authRoutes(app);
