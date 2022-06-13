@@ -16,7 +16,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: ['https://rateflix.vercel.app', 'http://localhost:3000']
+    origin: ['https://www.rateflix.lol', 'http://localhost:3000']
   })
 );
 
@@ -25,7 +25,7 @@ app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY],
-    domain: 'rateflix.lol'
+    domain: "www.rateflix.lol"
   })
 );
 app.use(passport.initialize());
