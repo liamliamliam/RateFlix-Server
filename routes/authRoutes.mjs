@@ -14,7 +14,6 @@ export default app => {
   });
 
   app.get('/auth/session', (req, res) => {
-    console.log('/auth/session - req.user:', req.user);
     res.send(req.user);
   });
 

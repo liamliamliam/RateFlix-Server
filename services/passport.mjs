@@ -10,16 +10,11 @@ const LocalStrategy = passportLocal.Strategy;
 const User = mongoose.model('Users');
 
 passport.serializeUser((user, done) => {
-  console.log('Serializing user:', user);
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  console.log('Attempting to deserialize user with id:', id);
-  User.findById(id).then((user) => {
-    console.log('Deserialization successful! User found:', user);
-    done(null, user)
-  });
+  User.findById(id).then((user) => done(null, user));
 });
 
 passport.use(
@@ -30,7 +25,6 @@ passport.use(
       callbackURL: "/auth/google/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log('GoogleStrategy - Profile:', profile);
       const existingUser = await User.findOne({ googleId: profile.id });
       if (existingUser) return done(null, existingUser);
       const { _json } = profile;
